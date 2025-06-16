@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer - 포트폴리오</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: #777;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .feature-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .stats-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .cta-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: 2px solid #667eea;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <header>
+            <h1 class="hero-title">🎯 AI Resume Analyzer</h1>
+            <p class="hero-subtitle">Slack 기반 AI 이력서 분석 및 채용 인텔리전스 시스템</p>
+            <p class="hero-description">
+                OpenAI GPT API와 Slack 봇을 활용하여 이력서를 자동으로 분석하고, 
+                채용 담당자에게 체계적인 인사이트를 제공하는 혁신적인 솔루션입니다.
+            </p>
+        </header>
+
+        <!-- Features Section -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3 class="feature-title">AI 이력서 분석</h3>
+                <p class="feature-description">
+                    GPT API를 활용한 자동 파싱과 구조화된 분석으로 
+                    지원자의 핵심 역량을 정량적으로 평가합니다.
+                </p>
+                <div class="feature-tech">
+                    <span class="tech-tag">OpenAI GPT</span>
+                    <span class="tech-tag">PDF 파싱</span>
+                    <span class="tech-tag">NLP</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">채용 인텔리전스</h3>
+                <p class="feature-description">
+                    원티드 등 채용사이트를 크롤링하여 실시간 시장 동향과 
+                    기술 트렌드를 분석합니다.
+                </p>
+                <div class="feature-tech">
+                    <span class="tech-tag">Selenium</span>
+                    <span class="tech-tag">Plotly</span>
+                    <span class="tech-tag">Data Analytics</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">Slack 봇 통합</h3>
+                <p class="feature-description">
+                    직관적인 Slack 인터페이스로 팀원들과 실시간으로 
+                    분석 결과를 공유하고 협업합니다.
+                </p>
+                <div class="feature-tech">
+                    <span class="tech-tag">Slack API</span>
+                    <span class="tech-tag">Flask</span>
+                    <span class="tech-tag">Webhooks</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3 class="feature-title">업무 자동화</h3>
+                <p class="feature-description">
+                    Notion 연동, PDF 리포트 생성, 실시간 알림 등 
+                    채용 프로세스 전반을 자동화합니다.
+                </p>
+                <div class="feature-tech">
+                    <span class="tech-tag">Notion API</span>
+                    <span class="tech-tag">ReportLab</span>
+                    <span class="tech-tag">Automation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h2 class="stats-title">🎯 프로젝트 성과</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">분석 시간 단축</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">정확도</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3배</div>
+                    <div class="stat-label">업무 효율성 향상</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5K+</div>
+                    <div class="stat-label">코드 라인</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2 class="cta-title">🚀 프로젝트 둘러보기</h2>
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 20px;">
+                AI와 자동화를 통한 채용 프로세스 혁신을 경험해보세요
+            </p>
+            
+            <div class="btn-group">
+                <a href="https://github.com/annie-recruit/ai-resume-analyzer" class="btn btn-primary">
+                    <i class="fab fa-github"></i>
+                    GitHub 코드 보기
+                </a>
+                <a href="#demo" class="btn btn-secondary">
+                    <i class="fas fa-play"></i>
+                    데모 영상 보기
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
