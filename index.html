@@ -335,12 +335,60 @@
                     <i class="fab fa-github"></i>
                     GitHub 코드 보기
                 </a>
-                <a href="#demo" class="btn btn-secondary">
+                <a href="#demo" class="btn btn-secondary" onclick="scrollToDemo()">
                     <i class="fas fa-play"></i>
                     데모 영상 보기
                 </a>
             </div>
         </div>
+
+        <!-- Demo Video Section (Hidden by default) -->
+        <div id="demo" class="stats-section" style="margin-top: 40px;">
+            <h2 class="stats-title">🎬 데모 영상</h2>
+            <div style="text-align: center; margin-bottom: 30px;">
+                <p style="color: #666; font-size: 1.1rem;">AI Resume Analyzer의 실제 동작을 확인해보세요!</p>
+            </div>
+            
+            <!-- YouTube Video -->
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
+                <iframe 
+                        src="https://www.youtube.com/embed/-2z5y0CuQsA?rel=0" 
+                        title="AI Resume Analyzer Demo"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 15px;"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                </iframe>
+            </div>
+            
+            <!-- Demo Features -->
+            <div class="stats-grid">
+                <div class="stat-item" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                    <div class="stat-number">🤖</div>
+                    <div class="stat-label">Slack 봇 시연</div>
+                </div>
+                <div class="stat-item" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                    <div class="stat-number">📊</div>
+                    <div class="stat-label">분석 결과 리포트</div>
+                </div>
+                <div class="stat-item" style="background: linear-gradient(135deg, #a8edea, #fed6e3);">
+                    <div class="stat-number">🔍</div>
+                    <div class="stat-label">실시간 크롤링</div>
+                </div>
+                <div class="stat-item" style="background: linear-gradient(135deg, #ffecd2, #fcb69f);">
+                    <div class="stat-number">⚡</div>
+                    <div class="stat-label">자동화 프로세스</div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function scrollToDemo() {
+            const demoSection = document.getElementById('demo');
+            
+            // 부드러운 스크롤
+            demoSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html> 
